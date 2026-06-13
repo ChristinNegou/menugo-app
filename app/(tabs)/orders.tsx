@@ -96,8 +96,8 @@ export default function OrdersScreen() {
     );
   }
 
-  const active = orders?.filter((o) => ACTIVE_STATUSES.includes(o.status)) ?? [];
-  const history = orders?.filter((o) => !ACTIVE_STATUSES.includes(o.status)) ?? [];
+  const active = orders?.filter((o: Order) => ACTIVE_STATUSES.includes(o.status)) ?? [];
+  const history = orders?.filter((o: Order) => !ACTIVE_STATUSES.includes(o.status)) ?? [];
   const displayed = activeTab === "active" ? active : history;
 
   return (

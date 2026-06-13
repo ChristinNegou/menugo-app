@@ -8,6 +8,7 @@ import { useState, useMemo } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import { useRestaurant, useMenuCategories, useMenuItems } from "@/hooks/useRestaurants";
+import { MenuCategory } from "@/types";
 import { RatingStars } from "@/components/RatingStars";
 import { MenuItemCard } from "@/components/MenuItemCard";
 import { QuantitySelector } from "@/components/QuantitySelector";
@@ -48,8 +49,8 @@ export default function RestaurantScreen() {
   const displayedItems = useMemo(() => {
     if (!allItems) return [];
     if (!selectedCategory) return allItems;
-    const cat = categories?.find((c) => c.name === selectedCategory);
-    return allItems.filter((i) => i.category_id === cat?.id);
+    const cat = categories?.find((c: MenuCategory) => c.name === selectedCategory);
+    return allItems.filter((i: MenuItem) => i.category_id === cat?.id);
   }, [allItems, selectedCategory, categories]);
 
   const handleAddToCart = (item: MenuItem) => {
@@ -173,7 +174,7 @@ export default function RestaurantScreen() {
                   Tout
                 </Text>
               </TouchableOpacity>
-              {categories.map((cat) => (
+              {categories.map((cat: MenuCategory) => (
                 <TouchableOpacity
                   key={cat.id}
                   onPress={() => setSelectedCategory(cat.name)}
@@ -192,7 +193,7 @@ export default function RestaurantScreen() {
         <View className="bg-white mt-2">
           {isLoading
             ? [1, 2, 3, 4].map((i) => <MenuItemSkeleton key={i} />)
-            : displayedItems.map((item) => (
+            : displayedItems.map((item: MenuItem) => (
                 <MenuItemCard
                   key={item.id}
                   item={item}

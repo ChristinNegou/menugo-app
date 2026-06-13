@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useRouter } from "expo-router";
 import { useRestaurants } from "@/hooks/useRestaurants";
+import { Restaurant } from "@/types";
 import { RestaurantCard } from "@/components/RestaurantCard";
 import { CategoryChip } from "@/components/CategoryChip";
 import { RestaurantCardSkeleton } from "@/components/LoadingSkeleton";
@@ -20,11 +21,11 @@ export default function HomeScreen() {
   const { data: restaurants, isLoading, refetch } = useRestaurants(selectedCategory);
   const totalItems = useCartStore((s) => s.getTotalItems());
 
-  const popular = restaurants?.filter((r) => r.rating >= 4.5) ?? [];
-  const newest = restaurants?.slice().sort((a, b) =>
+  const popular = restaurants?.filter((r: Restaurant) => r.rating >= 4.5) ?? [];
+  const newest = restaurants?.slice().sort((a: Restaurant, b: Restaurant) =>
     new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   ).slice(0, 6) ?? [];
-  const open = restaurants?.filter((r) => r.is_open) ?? [];
+  const open = restaurants?.filter((r: Restaurant) => r.is_open) ?? [];
 
   return (
     <SafeAreaView className="flex-1 bg-bg">
@@ -125,7 +126,7 @@ export default function HomeScreen() {
               ? [1, 2, 3].map((i) => (
                   <View key={i} className="bg-white rounded-2xl h-24" />
                 ))
-              : open.map((r) => <RestaurantCard key={r.id} restaurant={r} compact />)
+              : open.map((r: Restaurant) => <RestaurantCard key={r.id} restaurant={r} compact />)
             }
             {!isLoading && open.length === 0 && (
               <Text className="text-text-secondary text-center py-4">Aucun restaurant ouvert</Text>

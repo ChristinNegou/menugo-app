@@ -16,7 +16,7 @@ export default function OrderConfirmationScreen() {
   const { data: orders } = useOrders();
   const { mutate: updateStatus } = useUpdateOrderStatus();
 
-  const order = orders?.find((o) => o.id === orderId);
+  const order = orders?.find((o: Order) => o.id === orderId);
   const [simulatedStatus, setSimulatedStatus] = useState<Order["status"]>("received");
 
   const scaleAnim = useRef(new Animated.Value(0)).current;

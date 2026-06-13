@@ -18,7 +18,7 @@ const schema = z.object({
   password: z.string().min(8, "8 caractères minimum"),
   confirm_password: z.string(),
   phone: z.string().optional(),
-  terms: z.literal(true, { error: "Vous devez accepter les conditions" }),
+  terms: z.literal(true, { errorMap: () => ({ message: "Vous devez accepter les conditions" }) }),
 }).refine((d) => d.password === d.confirm_password, {
   message: "Les mots de passe ne correspondent pas",
   path: ["confirm_password"],
